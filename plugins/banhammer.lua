@@ -93,28 +93,28 @@ local function kick_ban_res(extra, success, result)
       local receiver = "chat#id"..chat_id
        if get_cmd == "اخراج" then
          if member_id == from_id then
-             return send_large_msg(receiver, "شما نمیتوانید خود را حذف کنید")
+             return send_large_msg(receiver, "You can't kick yourself!")
          end
          if is_momod2(member_id, chat_id) and not is_admin2(sender) then
-            return send_large_msg(receiver, "شما نمیتواند این فرد را حذف کنید")
+            return send_large_msg(receiver, "You can't kick this person!")
          end
          return kick_user(member_id, chat_id)
       elseif get_cmd == 'بن' then
         if is_momod2(member_id, chat_id) and not is_admin2(sender) then
-          return send_large_msg(receiver, "شما نمیتوانید این فرد را بن کنید")
+          return send_large_msg(receiver, "You can't ban this person!")
         end
-        send_large_msg(receiver, 'کاربر @'..member..' ['..member_id..'] بن شد')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] banned')
         return ban_user(member_id, chat_id)
       elseif get_cmd == 'حذف بن' then
-        send_large_msg(receiver, 'کاربر @'..member..' ['..member_id..'] آن بن شد')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] unbanned')
         local hash =  'banned:'..chat_id
         redis:srem(hash, member_id)
-        return 'کاربر '..user_id..' آن بن شد'
+        return 'User '..user_id..' unbanned'
       elseif get_cmd == 'سوپر بن' then
-        send_large_msg(receiver, 'کاربر @'..member..' ['..member_id..'] از همه گروه ها بن شد')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] ban from all group')
         return banall_user(member_id, chat_id)
       elseif get_cmd == 'حذف سوپر بن' then
-        send_large_msg(receiver, 'کاربر @'..member..' ['..member_id..'] از سوپر بن خارج شد')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] unglobally banned from all group')
         return unbanall_user(member_id, chat_id)
       end
 end
